@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-dev:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkou del código
