@@ -1,0 +1,29 @@
+name: 03 - CD Producción (Deploy)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Construir Artefacto (JAR)
+        run: mvn clean package -DskipTests
+
+      # OPCIÓN B: Simulación
+      - name: Simular Despliegue ()
+        run: |
+          echo "Conectando al servidor de VALDO..."
+          echo "Transfiriendo archivo JAR..."
+          echo "Reiniciando servicio..."
+          echo "¡Despliegue en Producción EXITOSO!"

@@ -1,0 +1,26 @@
+name: 01 - CI Desarrollo (Build Check)
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+  build-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkou del código
+        uses: actions/checkout@v4
+
+      - name: Configurar el JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Compilar con Maven
+        run: mvn clean compile
+
+
+
+
