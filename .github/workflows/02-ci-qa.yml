@@ -12,6 +12,10 @@ jobs:
   test-qa:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./Valdo-Backend
+
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
@@ -23,6 +27,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: ./Valdo-Backend/pom.xml
 
       - name: Ejecutar Pruebas Unitarias
         run: mvn test

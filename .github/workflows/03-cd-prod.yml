@@ -6,6 +6,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./Valdo-Backend
+
     steps:
       # 1. Bajar código
       - name: Checkout del código
@@ -29,7 +34,7 @@ jobs:
       - name: Construir y Subir Imagen Docker
         uses: docker/build-push-action@v6
         with:
-          context: .    #Usar el directorio actual
+          context: ./Valdo-Backend   #Usar el directorio actual
           push: true    #Habilita el push
           tags: ${{ secrets.DOCKER_USERNAME }}/valdo-backend:latest
 

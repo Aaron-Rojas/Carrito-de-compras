@@ -8,8 +8,12 @@ jobs:
   build-dev:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./Valdo-Backend
+
     steps:
-      - name: Checkou del código
+      - name: Checkout del código
         uses: actions/checkout@v4
 
       - name: Configurar el JDK 21
@@ -18,6 +22,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: ./Valdo-Backend/pom.xml
+
       - name: Compilar con Maven
         run: mvn clean compile
 
