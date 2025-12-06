@@ -1,65 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ProductoCard from "../components/ProductoCard";
+import {obtenerProductos} from "../services/productServices.js";
+import {CarritoContext} from "../context/CarritoContext.jsx";
 import "./Ofertas.css";
 
-export default function Ofertas({ agregar }) {
-  const [productos, setProductos] = useState([]);
+export default function Ofertas() {
+    const [productos, setProductos] = useState([]);
+    const {agregarAlCarrito} = useContext(CarritoContext);
 
-  useEffect(() => {
-    const mockProductos = [
-      { 
-        id: 1, 
-        nombre: "Blazer Elegante", 
-        precio: 179.90, 
-        oferta: true, 
-        imagen: "/img/oferta1.jpg"
-      },
-      { 
-        id: 2, 
-        nombre: "Falda Midi", 
-        precio: 89.90, 
-        oferta: true, 
-        imagen: "/img/oferta2.jpg"
-      },
-      { 
-        id: 3, 
-        nombre: "Zapatos Oxford", 
-        precio: 139.90, 
-        oferta: true, 
-        imagen: "/img/oferta3.jpg"
-      },
-      { 
-        id: 4, 
-        nombre: "Chaqueta Vaquera", 
-        precio: 129.90, 
-        oferta: true, 
-        imagen: "/img/oferta4.jpg"
-      },
-      { 
-        id: 5, 
-        nombre: "Botines de Cuero", 
-        precio: 159.90, 
-        oferta: true, 
-        imagen: "/img/oferta5.jpg"
-      }
-    ];
-
-    setProductos(mockProductos);
-  }, []);
-
-  const productosEnOferta = productos.filter(item => item.oferta);
-
+    useEffect(() => {
+        //Se llama al backend al cargar la página
+        async function fetchData() {
+            const data = await obtenerProductos();
+            const filtrados =  data.filter(p => p.categoria ==="Ofertas"); //solo muestra ropa de hombres
+            setProductos(filtrados);
+        }
+        fetchData();
+    }, []);
   return (
     <div className="ofertas-container">
       <h1>Ofertas de la Semana</h1>
       <div className="productos-grid">
-        {productosEnOferta.length > 0 ? (
-          productosEnOferta.map(item => (
-            <ProductoCard key={item.id} item={item} agregar={agregar} />
-          ))
-        ) : (
-          <p>No hay ofertas disponibles.</p>
-        )}
+          {productos.length > 0 ? (
+              productos.map((prod) => (
+                  <ProductoCard
+                      key = {prod.id}
+                      item = {prod}
+                      agregar = {agregarAlCarrito}
+                  />
+              ))
+          ):(
+              <p> Cargando Productos...</p>
+          )}
       </div>
     </div>
   );
