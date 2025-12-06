@@ -7,11 +7,11 @@ export default function Navbar() {
       <Link to="/" className="logo">
         Valdo
       </Link>
-
       <ul>
-        <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/productos">Productos</Link></li>
-        <li><Link to="/carrito">Carrito</Link></li>
+          <li><Link to="/categoria/hombres">Hombres</Link></li>
+          <li><Link to="/categoria/mujeres">Mujeres</Link></li>
+          <li><Link to="/categoria/accesorios">Accesorios</Link></li>
+          <li><Link to="/categoria/ofertas">Ofertas</Link></li>
       </ul>
     </nav>
   );

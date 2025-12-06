@@ -16,17 +16,17 @@ export default function Home() {
       <section className="categorias">
         <h2>Categorías destacadas</h2>
         <div className="cat-grid">
-          <Link to="/mujeres" className="cat-card">
+          <Link to="categoria/mujeres" className="cat-card">
             <img src="/img/mujer.jpg" alt="Mujeres" />
             <p>Mujeres</p>
           </Link>
 
-          <Link to="/hombres" className="cat-card">
+          <Link to="categoria/hombres" className="cat-card">
             <img src="/img/hombre.jpg" alt="Hombres" />
             <p>Hombres</p>
           </Link>
 
-          <Link to="/accesorios" className="cat-card">
+          <Link to="categoria/accesorios" className="cat-card">
             <img src="/img/accesorio.png" alt="Accesorios" />
             <p>Accesorios</p>
           </Link>
@@ -34,8 +34,7 @@ export default function Home() {
       </section>
 
       <section className="ofertas">
-
-        <Link to="/ofertas" className="ofertas-link">
+        <Link to="categoria/ofertas" className="ofertas-link">
           <h2>Ofertas de la semana</h2>
           <p>Hasta 50% de descuento en poleras</p>
         </Link>
