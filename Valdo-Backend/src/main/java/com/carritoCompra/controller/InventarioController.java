@@ -1,5 +1,6 @@
 package com.carritoCompra.controller;
 
+import com.carritoCompra.dto.ProductoDTO;
 import com.carritoCompra.model.Producto;
 import com.carritoCompra.services.ProductoService;
 import com.carritoCompra.dto.CompraRequest;
@@ -23,13 +24,13 @@ public class InventarioController {
     private ProductoService productoService;
 
     @GetMapping("/productos")
-    public ResponseEntity<List<Producto>> listarProductos(){
+    public ResponseEntity<List<ProductoDTO>> listarProductos(){
         log.info("📌 Solicitud recibida: Listar todos los productos");
 
-        List<Producto> lista = productoService.listarTodos();
+        List<ProductoDTO> lista = productoService.listarTodosDTO();
         log.info("✅ Se encontraron {} productos", lista.size());
 
-        return ResponseEntity.ok(productoService.listarTodos());
+        return ResponseEntity.ok(lista);
     }
 
 

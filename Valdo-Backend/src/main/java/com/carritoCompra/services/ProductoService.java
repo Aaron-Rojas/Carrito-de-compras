@@ -1,5 +1,6 @@
 package com.carritoCompra.services;
 
+import com.carritoCompra.dto.ProductoDTO;
 import com.carritoCompra.model.Producto;
 import com.carritoCompra.repository.ProductoRepository;
 import jakarta.transaction.Transactional;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoService {
@@ -35,6 +37,27 @@ public class ProductoService {
 
     public Producto guardarProducto(Producto producto){
         return productoRepository.save(producto);
+    }
+
+    private ProductoDTO convertirADTO(Producto producto) {
+        ProductoDTO dto = new ProductoDTO();
+        dto.setId(producto.getId());
+        dto.setNombre(producto.getNombre());
+        dto.setStock(producto.getStock());
+        dto.setImagen(producto.getImagen());
+        dto.setCategoria(producto.getCategoria());
+        dto.setEsOferta(producto.getEsOferta());
+
+        dto.setPrecio(producto.getPrecio());
+
+        return dto;
+    }
+
+    public List<ProductoDTO> listarTodosDTO() {
+        return productoRepository.findAll()
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
 
 }
