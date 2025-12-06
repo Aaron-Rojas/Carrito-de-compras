@@ -25,7 +25,7 @@ public class Producto {
     private String descripcion;
     private BigDecimal precio;
     private Boolean esOferta;
-
+    private String categoria;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Precio> precios;
