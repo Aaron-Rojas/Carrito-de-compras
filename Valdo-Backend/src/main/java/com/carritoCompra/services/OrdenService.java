@@ -1,6 +1,8 @@
 package com.carritoCompra.services;
 
 import com.carritoCompra.dto.CompraRequest;
+import com.carritoCompra.dto.DetalleOrdenDTO;
+import com.carritoCompra.dto.OrdenDTO;
 import com.carritoCompra.model.DetalleOrden;
 import com.carritoCompra.model.Orden;
 import com.carritoCompra.model.Producto;
@@ -16,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrdenService {
@@ -26,8 +29,9 @@ public class OrdenService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+
     @Transactional
-    public Orden generarOrden(CompraRequest request) {
+    public OrdenDTO generarOrden(CompraRequest request) {
 
         Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -60,12 +64,46 @@ public class OrdenService {
 
             orden.getDetalles().add(detalleOrden);
             totalOrden = totalOrden.add(subtotal);
+
         }
         orden.setTotal(totalOrden);
-        return ordenRepository.save(orden);
+        Orden ordenGuardada =  ordenRepository.save(orden);
+        return convertirADTO(ordenGuardada);
     }
 
-    public List<Orden> listarPorUsuario(Long usuarioId) {
-        return ordenRepository.findByUsuarioId(usuarioId);
+    public List<OrdenDTO> listarPorUsuario(Long usuarioId) {
+        return ordenRepository.findByUsuarioId(usuarioId).stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
     }
+
+    private OrdenDTO convertirADTO(Orden orden) {
+        OrdenDTO dto = new OrdenDTO();
+        dto.setId(orden.getId());
+        dto.setFecha(orden.getFecha());
+        dto.setTotal(orden.getTotal());
+
+        List<DetalleOrdenDTO> detallesDTO = orden.getDetalles().stream()
+                .map(detalle -> {
+                    DetalleOrdenDTO d = new DetalleOrdenDTO();
+                    d.setProductoId(detalle.getProducto().getId());
+                    d.setNombreProducto(detalle.getProducto().getNombre());
+                    d.setImagenProducto(detalle.getProducto().getImagen());
+                    d.setCantidad(detalle.getCantidad());
+                    d.setPrecioUnitario(detalle.getPrecioUnitario());
+                    d.setSubTotal(detalle.getSubTotal());
+                    return d;
+                }).collect(Collectors.toList());
+
+        dto.setDetalles(detallesDTO);
+        return dto;
+    }
+
+    public List<OrdenDTO> listarHistorialDTO(Long usuarioId) {
+        return ordenRepository.findByUsuarioId(usuarioId)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
 }

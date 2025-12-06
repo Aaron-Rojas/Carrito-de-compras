@@ -1,7 +1,7 @@
 package com.carritoCompra.controller;
 
 import com.carritoCompra.dto.CompraRequest;
-import com.carritoCompra.model.Orden;
+import com.carritoCompra.dto.OrdenDTO;
 import com.carritoCompra.services.OrdenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +22,12 @@ public class OrdenController {
     private OrdenService ordenService;
 
     @PostMapping
-
     public ResponseEntity<?> comprar(@RequestBody CompraRequest request) {
         log.info("🛒 COMPRA: Iniciando proceso de compra para Usuario ID: {}", request.getUsuarioId());
         log.info("📦 ITEMS: Cantidad de productos en carrito: {}", request.getItems().size());
 
         try {
-            Orden nuevaOrden = ordenService.generarOrden(request);
+            OrdenDTO nuevaOrden = ordenService.generarOrden(request);
             log.info("✅ COMPRA EXITOSA: Orden #{} creada. Total: {}", nuevaOrden.getId(), nuevaOrden.getTotal());
             return ResponseEntity.ok(nuevaOrden);
         } catch (RuntimeException e) {
@@ -38,9 +37,9 @@ public class OrdenController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<Orden>> listarHistorial(@PathVariable Long usuarioId) {
+    public ResponseEntity<List<OrdenDTO>> listarHistorial(@PathVariable Long usuarioId) {
         log.info("📜 HISTORIAL: Solicitando compras del Usuario ID: {}", usuarioId);
-        List<Orden> historial = ordenService.listarPorUsuario(usuarioId);
+        List<OrdenDTO> historial = ordenService.listarHistorialDTO(usuarioId);
         log.info("✅ HISTORIAL: Se encontraron {} órdenes previas.", historial.size());
         return ResponseEntity.ok(historial);
     }
