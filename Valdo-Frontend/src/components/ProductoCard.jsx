@@ -1,14 +1,25 @@
 import "./ProductoCard.css";
 
-function ProductoCard({ item, agregar }) {
+export default function ProductoCard ({ item, agregar }) {
   return (
-    <div className="card">
-      <img src={item.imagen} alt={item.nombre} />
-      <h3>{item.nombre}</h3>
-      <p className="precio">S/ {item.precio}</p>
-      <button onClick={() => agregar(item)}>Agregar al carrito</button>
-    </div>
+      <div className="producto-card">
+          <div className="img-container">
+              <img src={item.imagen} alt={item.nombre} />
+          </div>
+
+          <div className="card-info">
+              <h3>{item.nombre}</h3>
+              <p className="precio">S/ {item.precio.toFixed(2)}</p>
+
+              <button
+                  className="btn-agregar"
+                  onClick={() => agregar(item)}
+              >
+                  Agregar al Carrito
+              </button>
+          </div>
+      </div>
   );
 }
 
-export default ProductoCard;
+
