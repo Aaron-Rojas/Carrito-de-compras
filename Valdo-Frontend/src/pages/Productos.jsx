@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useParams} from "react-routes-dom";
+import { useParams } from "react-router-dom";
 import ProductoCard from "../components/ProductoCard";
 import {obtenerProductos} from "../services/productServices.js";
 import { CarritoContext } from "../context/CarritoContext"; 
