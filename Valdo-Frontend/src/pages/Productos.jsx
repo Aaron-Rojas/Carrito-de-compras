@@ -1,58 +1,55 @@
 import { useEffect, useState, useContext } from "react";
+import { useParams } from " react-routes-dom ";
 import ProductoCard from "../components/ProductoCard";
+import {obtenerProductos} from "../services/productServices.js";
 import { CarritoContext } from "../context/CarritoContext"; 
 import "./Productos.css"; 
 
 export default function Productos() {
-  const [productos, setProductos] = useState([]);
-  const [filtro, setFiltro] = useState("Todos");
-  const [busqueda, setBusqueda] = useState("");
+    const { tipo } = useParams();
+    const [productos, setProductos] = useState([]);
+    const [titulo, setTitulo] = useState("Productos");
+    const { agregarAlCarrito } = useContext(CarritoContext);
 
-  const { agregarAlCarrito } = useContext(CarritoContext); 
-
-  useEffect(() => {
-    fetch("http://localhost:8080/productos")
-      .then(res => res.json())
-      .then(data => setProductos(data));
-  }, []);
-
-  const productosFiltrados = productos.filter(item => {
-    const coincideCategoria = filtro === "Todos" || item.categoria === filtro;
-    const coincideBusqueda = item.nombre.toLowerCase().includes(busqueda.toLowerCase());
-    return coincideCategoria && coincideBusqueda;
-  });
+    useEffect(() => {
+        async function fetchData() {
+        const data = await obtenerProductos();
+        let filtrados = [];
+        if (!tipo){
+            filtrados = data;
+            setTitulo("Todos los productos");
+        }else if (tipo === "ofertas"){
+            filtrados = data.filter( p => p.esOferta === true );
+            setTitulo("Ofertas especiales");
+        }else{
+        filtrados = data.filter(
+            p => p.categoria && p.categoria.toLowerCase() === tipo.toLowerCase()
+        );
+            setTitulo(tipo.charAt(0).toUpperCase() + tipo.slice(1));
+        }
+        setProductos(filtrados);
+        }
+        fetchData();
+    }, [tipo]);
 
   return (
     <div className="productos-container">
-      <h1 className="titulo-productos">Productos disponibles</h1>
+      <h1 className="titulo-productos">{titulo}</h1>
 
-      <div className="productos-filtros">
-        <button onClick={() => setFiltro("Todos")}>Todos</button>
-        <button onClick={() => setFiltro("Mujeres")}>Mujeres</button>
-        <button onClick={() => setFiltro("Hombres")}>Hombres</button>
-        <button onClick={() => setFiltro("Accesorios")}>Accesorios</button>
+        <div className="productos-grid">
+            {productos.length > 0 ? (
+                productos.map((prod) => (
+                    <ProductoCard
+                        key={prod.id}
+                        item={prod}
+                        agregar={agregarAlCarrito}
+                    />
+                ))
+            ) : (
+                <p> No se encontraron productos en esta categoría.</p>
+                )}
 
-        <input
-          type="text"
-          placeholder="Buscar producto..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-      </div>
-
-      <div className="productos-grid">
-        {productosFiltrados.length > 0 ? (
-          productosFiltrados.map(item => (
-            <ProductoCard
-              key={item.id}
-              item={item}
-              agregar={agregarAlCarrito} 
-            />
-          ))
-        ) : (
-          <p>No se encontraron productos.</p>
-        )}
-      </div>
+        </div>
     </div>
   );
 }
