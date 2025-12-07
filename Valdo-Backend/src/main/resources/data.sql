@@ -5,7 +5,7 @@ INSERT INTO usuarios (nombre, email, password) VALUES ('cliente', 'cliente@valdo
 
 -- Productos con Categoría y Precio (Hombres)
 INSERT INTO productos (nombre, stock, precio, imagen, categoria, es_oferta)
-VALUES ('Polo Oversize', 50, 49.90, '/img/polo-oversize.jpg', 'Hombres', false);
+VALUES ('Polo Oversize', 50, 49.90, 'https://imgs.search.brave.com/ZBPsez__CXKNqnhoh1dwD9fDEpjnp505Y0cf7wZZQbI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/Z2FwLmNvbS93ZWJj/b250ZW50LzAwNjAv/MDIyLzA3MS9jbjYw/MDIyMDcxLmpwZw', 'Hombres', false);
 
 INSERT INTO productos (nombre, stock, precio, imagen, categoria, es_oferta)
 VALUES ('Pantalón Cargo', 30, 89.90, 'https://i.imgur.com/3N2Fq0H.jpeg', 'Hombres', true);
