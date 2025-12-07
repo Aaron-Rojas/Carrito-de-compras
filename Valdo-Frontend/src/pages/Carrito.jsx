@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { CarritoContext } from "../context/CarritoContext.jsx";
 import {AuthContext} from "../context/AuthContext.js";
 import {useNavigate, Link} from "react-router-dom";
-import API_URL, {getHeaders} from "../services/api.js";
+import {procesarCompra} from "../services/carritoServices.js";
 import "./Carrito.css";
 
 export default function Carrito() {
@@ -31,30 +31,20 @@ export default function Carrito() {
 
 
         try {
-            const response = await fetch(`${API_URL}/ordenes`, {
-                method: "POST",
-                headers: getHeaders(),
-                body: JSON.stringify(ordenData),
-            });
+            const ordenCreada = await procesarCompra(ordenData);
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText || "Error al procesar la compra");
-            }
-
-            const data = await response.json();
-
-            alert(`¡Compra exitosa! Orden #${data.id} generada.`);
+            alert(`¡Compra exitosa! Orden #${ordenCreada.id}`);
             limpiarCarrito();
             navigate("/");
 
         } catch (error) {
-            console.error(error);
-            alert("Hubo un problema: " + error.message);
+            alert(error.message);
         } finally {
             setProcesando(false);
         }
-    }
+    };
+
+
     if (carrito.length === 0) {
         return (
             <div className="carrito-container carrito-vacio">
