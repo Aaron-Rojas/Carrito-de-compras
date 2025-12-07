@@ -1,0 +1,128 @@
+.carrito-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.carrito-titulo {
+    color: #1e3a8a;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f97316;
+    padding-bottom: 10px;
+}
+
+.carrito-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+    gap: 15px;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
+
+.carrito-header {
+    font-weight: bold;
+    color: #555;
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.item-precio, .item-subtotal {
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-eliminar:hover {
+    transform: scale(1.2);
+    color: #dc2626;
+}
+
+.carrito-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.resumen-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: right;
+    border: 1px solid #eee;
+}
+
+.resumen-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1e3a8a;
+}
+
+.total-amount {
+    color: #f97316;
+    font-weight: 800;
+}
+
+.btn-pagar {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background-color: #f97316;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-pagar:hover {
+    background-color: #ea580c;
+}
+
+.btn-pagar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.carrito-vacio {
+    text-align: center;
+    margin-top: 3rem;
+    color: #777;
+}
+
+.link-volver {
+    color: #3b82f6;
+    text-decoration: underline;
+}
