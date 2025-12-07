@@ -20,7 +20,7 @@ jobs:
         username: ${{secrets.DOCKER_USERNAME}}
         password: ${{secrets.DOCKER_PASSWORD}}
 
-    - name: Build and Push en Docker Image
+    - name: Build and Push en Docker Imagen
       uses: docker/build-push-action@v4
       with:
         context: ./Valdo-Frontend
