@@ -2,7 +2,7 @@ import {createContext, useState, useEffect} from  "react" ;
 import {loginServices} from "../services/authServices.js";
 
 export const AuthContext = createContext();
-
+//xd
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [error, setError] = useState("");

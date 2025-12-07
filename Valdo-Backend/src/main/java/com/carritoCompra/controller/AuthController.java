@@ -18,7 +18,7 @@ public class AuthController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
+    //xd
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         log.info("🔐 LOGIN: Intento de acceso para email: {}", request.getEmail());
