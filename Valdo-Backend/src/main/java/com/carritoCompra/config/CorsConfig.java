@@ -14,8 +14,8 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Aplica a TODAS las rutas
-                        .allowedOrigins("*") // Permite a CUALQUIERA (incluyendo localhost y Render)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedOrigins("https://valdo-frontend.onrender.com") //  Render
+                        .allowedMethods("*")
                         .allowedHeaders("*");
             }
         };
