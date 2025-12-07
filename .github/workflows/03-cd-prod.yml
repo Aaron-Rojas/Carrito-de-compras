@@ -1,7 +1,9 @@
 name: 03 - CD Producción (Deploy)
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "deploy" ]
+    paths:
+      - 'Valdo-Backend/**'
 
 jobs:
   build-and-push:
